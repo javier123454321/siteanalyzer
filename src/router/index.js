@@ -9,6 +9,9 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+import datePicker from 'vue-bootstrap-datetimepicker';
+Vue.use(datePicker);
+
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 
