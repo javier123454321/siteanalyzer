@@ -2,17 +2,25 @@
     <div class="menuArea">
         <div class="date">
             <h3>Date</h3>
+                <toggle-button 
+                class="toggleButton"
+                v-model: attrs.type
+                :sync="true"
+                :labels="true"/>
+
             <div class="row">
-                <div class="col-md-12">
-                    <date-picker v-model="date" :config="options"></date-picker>
-                </div>
+                <v-date-picker
+                :popover="{ visibility: 'click' }"
+                :attributes='attrs'
+                mode='single'
+                v-model='date'/>
             </div>
         </div>
         <ul>
-            <div :options='option' :key='option' v-for='option in options' class="menuItem">
-            <li >{{ option.title }} 
+            <div :features='feature' :key='feature' v-for='feature in features' class="menuItem">
+            <li >{{ feature.title }} 
                 <toggle-button 
-                v-model="option.isOn"
+                v-model="feature.isOn"
                 class="toggleButton"
                 :sync="true"
                 :labels="true"/>
@@ -28,15 +36,30 @@ export default {
   name: 'OptionsMenu',
   data(){
       return {
-        options:[
+        features:
+        [
         {id: 0, title: 'Sun Path', isOn: true},
         {id: 1, title: 'Area', isOn: true}
-      ],
-      date: {
-      }
-        }
-  }  
-}
+        ],
+        picker: [
+            {modes: ['single', 'range']},
+            {mode: 'single'}
+        ],
+        date: new Date(), 
+        attrs: [
+            {
+            key: 'today',
+            highlight: {
+                backgroundColor: '#bbbbbb',
+            },
+            contentStyle: {
+               color: '#fafafa',
+            },
+            }
+        ],
+        };
+    },
+    };
 </script>
 
 <style>
