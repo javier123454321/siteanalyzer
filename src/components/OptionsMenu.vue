@@ -16,6 +16,14 @@
                 v-model='date'/>
             </div>
         </div>
+        <div>
+        <b-form-select v-model="this.$parent.mapStyle" :options="this.$parent.mapStyles" class="mb-3">
+            <template v-slot:first>
+                <option :value="null" disabled>-- Please select an option --</option>
+            </template>
+        <form action=""></form>
+        </b-form-select>
+        </div>
         <ul>
             <div :features='feature' :key='feature' v-for='feature in features' class="menuItem">
             <li >{{ feature.title }} 
@@ -23,7 +31,7 @@
                 v-model="feature.isOn"
                 class="toggleButton"
                 :sync="true"
-                :labels="true"/>
+                :labels="true"/>    
             </li>
             </div>
         </ul>
@@ -59,6 +67,11 @@ export default {
         ],
         };
     },
+    methods: {
+        $root.$on('Maps', () => {
+            this.mountTileLayer();
+        }
+    }
     };
 </script>
 

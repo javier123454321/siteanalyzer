@@ -18,12 +18,7 @@ export default {
   data(){
     return {
         map: null,
-        mapStyles: {
-          dark: 'dark_all',
-          light: 'light_all'
-        },
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        mapStyle: '',
         tileLayer: '',
         layers: [],
         }
@@ -34,8 +29,8 @@ export default {
     },
   methods: {
     mountTileLayer(){
-      this.mapStyle = this.mapStyles.light;
-      this.tileLayer = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/'+ this.mapStyle + '/{z}/{x}/{y}.png';
+      this.$parent.mapStyle = this.$parent.mapStyles[0].value;
+      this.tileLayer = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/'+ this.$parent.mapStyle + '/{z}/{x}/{y}.png';
       this.initMap()
     },
     initMap() {
@@ -44,8 +39,8 @@ export default {
         zoom: 13,
         zoomControl: true,
         preferCanvas: false
-      }
-      );
+         }
+        );
       },
     initLayers() {
       L.tileLayer(this.tileLayer, {
@@ -55,7 +50,6 @@ export default {
      },
     },
   components: {
-    // 'l-map': leaflet.Map,
   }
 }
 </script>
