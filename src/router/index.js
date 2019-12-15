@@ -11,6 +11,12 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import VCalendar from 'v-calendar'
 
+import * as Vue2Leaflet from 'vue2-leaflet'
+import * as leaflet from 'leaflet'
+
+Vue.use(Vue2Leaflet)
+Vue.use(leaflet)
+
 Vue.use(VCalendar);
 
 Vue.use(VueRouter);
