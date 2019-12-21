@@ -17,12 +17,13 @@
             </div>
         </div>
         <div>
-        <b-form-select v-model="this.$parent.mapStyle" :options="this.$parent.mapStyles" class="mb-3">
-            <template v-slot:first>
-                <option :value="null" disabled>-- Please select an option --</option>
-            </template>
-        <form action=""></form>
-        </b-form-select>
+        <b-dropdown id="choose style" text="Select Map Style" 
+        ref="dropdown" class="m-2"
+        block variant="light">
+            <b-dropdown-item :styles='mapStyles' :key='style' v-for='style in mapStyles'>
+                {{ style.text }}
+            </b-dropdown-item>
+        </b-dropdown>
         </div>
         <ul>
             <div :features='feature' :key='feature' v-for='feature in features' class="menuItem">
@@ -44,10 +45,14 @@ export default {
   name: 'OptionsMenu',
   data(){
       return {
+        mapStyles: [
+            {value: 'light_all', text:'light'},
+            {value: 'dark_all', text: 'dark'}
+            ],
         features:
         [
-        {id: 0, title: 'Sun Path', isOn: true},
-        {id: 1, title: 'Area', isOn: true}
+            {id: 0, title: 'Sun Path', isOn: true},
+            {id: 1, title: 'Area', isOn: true}
         ],
         picker: [
             {modes: ['single', 'range']},
@@ -62,17 +67,16 @@ export default {
             },
             contentStyle: {
                color: '#fafafa',
-            },
+                },
             }
-        ],
-        };
-    },
+            ],
+         };
+        },
     methods: {
-        $root.$on('Maps', () => {
-            this.mountTileLayer();
+        // reInitMap: this.$root.$on('mountTitleLayer')
         }
-    }
-    };
+};
+
 </script>
 
 <style>
@@ -103,5 +107,8 @@ export default {
     }
     .toggleButton{
         float: right;
+    }
+    .selectStyle{
+        margin: 10px, 10px;
     }
 </style>

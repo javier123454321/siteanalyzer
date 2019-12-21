@@ -28,7 +28,7 @@ export default {
     this.initLayers();
     },
   methods: {
-    mountTileLayer(){
+    mountTileLayer: function(){
       this.$parent.mapStyle = this.$parent.mapStyles[0].value;
       this.tileLayer = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/'+ this.$parent.mapStyle + '/{z}/{x}/{y}.png';
       this.initMap()

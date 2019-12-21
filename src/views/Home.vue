@@ -20,8 +20,8 @@ export default {
     return {
       options: [],
       mapStyles: [
-        {value: 'dark_all', text: 'dark'},
-        {value: 'light_all', text:'light'}
+        {value: 'light_all', text:'light'},
+        {value: 'dark_all', text: 'dark'}
       ],
       mapStyle: '',
       
