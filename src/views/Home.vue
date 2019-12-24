@@ -10,6 +10,8 @@
 import Maps from '@/components/Maps.vue';
 import OptionsMenu from '@/components/OptionsMenu.vue'
 import L from 'leaflet';
+import { /*GeoSearchControl,*/ OpenStreetMapProvider } from 'leaflet-geosearch';
+
 
 export default {
   name: 'home',
@@ -26,7 +28,10 @@ export default {
       ],
       mapStyle: '', 
       tileLayer: '',
-      mapCenter: [51.505, -0.09]
+      mapCenter: [51.505, -0.09], // current center is London
+      currentZoom: 13,
+      searchProvier: new OpenStreetMapProvider(),
+      searchResults: null,
     }
   },
   methods: {
@@ -40,7 +45,7 @@ export default {
     initMap: function() {
       this.map = L.map('mapid', {
         center: this.mapCenter,
-        zoom: 13,
+        zoom: this.currentZoom,
         zoomControl: true,
         preferCanvas: false
          }
@@ -56,12 +61,29 @@ export default {
       this.mountTileLayer();
       this.initLayers();
      },
+     searchMap: async function(search){
+      this.searchResults = await this.searchProvier.search({ query: search });
+      // var searchControl = new GeoSearchControl({
+      //   provider: this.searchProvier,
+      //   style: 'bar',
+      //   autoCompleteDelay: 250,  
+      //   }).addTo(this.map);
+
+      // this.map.addControl(searchControl);
+      // // var results = new L.LayerGroup().addTo(this.map);
+     },
      updateStyle: function(style){
       this.mapStyle = style;
       this.mapCenter = this.map.getCenter();
+      this.currentZoom = this.map.getZoom();
+      this.resetMap();
+     },
+     resetMap: function(){
       this.map.remove();
       this.mountMap();
-     }
-    },
+      }
+  }
 }
 </script>
+
+

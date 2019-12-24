@@ -1,6 +1,12 @@
 <template>
     <div class="mapArea" id="map">
       <div id="mapid"></div>
+    <div class='pointer'>
+        <form id="searchForm" placeholder="Search Map" @submit="$emit('search-query', this.searchQuery())">
+          <input type="text" name="searchQuery" id="searchMap" placeholder="Search Map">
+          <button type="submit"><img src="//src/assets/magnifying-glass.png"></button>
+        </form>
+    </div>
     </div>
 
 </template>
@@ -17,17 +23,23 @@ export default {
   } ,
   data(){
     return {
-        map: null,
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        tileLayer: '',
-        layers: [],
+      searchResults: null
         }
   },
   mounted(){
     this.$parent.mountMap();
     },
   components: {
-  }
+  },
+  methods: {
+    searchQuery: function(){
+      let searchValue = document.getElementById("searchForm").value;
+      // alert(document.getElementById("searchMap").value);
+      document.getElementById("searchMap").value = '';
+      return searchValue;
+      
+    }
+    },
 }
 </script>
 
@@ -41,8 +53,22 @@ export default {
         bottom: 0;
         right: 0;
         overflow: hidden;
+        z-index: 0;
     }
     #mapid { 
       height: 100%; 
       }
+    #searchMap {
+      z-index: 9999;
+    }
+    
+    .pointer{
+      position:absolute;
+      top:86px;
+      left:10px;
+      z-index:9995;
+    }
+    .pointer:hover{
+      cursor: pointer;
+    }
 </style>
