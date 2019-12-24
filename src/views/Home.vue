@@ -26,6 +26,7 @@ export default {
       ],
       mapStyle: '', 
       tileLayer: '',
+      mapCenter: [51.505, -0.09]
     }
   },
   methods: {
@@ -38,7 +39,7 @@ export default {
     },
     initMap: function() {
       this.map = L.map('mapid', {
-        center: [51.505, -0.09],
+        center: this.mapCenter,
         zoom: 13,
         zoomControl: true,
         preferCanvas: false
@@ -46,7 +47,6 @@ export default {
         );
       },
     initLayers: function() {
-      alert();
       L.tileLayer(this.tileLayer, {
       attribution: this.attribution,
       maxZoom: 18,
@@ -58,6 +58,7 @@ export default {
      },
      updateStyle: function(style){
       this.mapStyle = style;
+      this.mapCenter = this.map.getCenter();
       this.map.remove();
       this.mountMap();
      }
