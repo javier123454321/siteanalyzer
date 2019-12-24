@@ -20,7 +20,9 @@
         <b-dropdown id="choose style" text="Select Map Style" 
         ref="dropdown" class="m-2"
         block variant="light">
-            <b-dropdown-item :styles='mapStyles' :key='style' v-for='style in mapStyles'>
+            <b-dropdown-item :styles='$parent.mapStyles' 
+            :key='style' v-for='style in $parent.mapStyles' 
+            @click="$emit('change-style', style.value)">
                 {{ style.text }}
             </b-dropdown-item>
         </b-dropdown>
@@ -40,15 +42,12 @@
 </template>
 
 <script>
+// import { log } from 'util';
 
 export default {
   name: 'OptionsMenu',
   data(){
       return {
-        mapStyles: [
-            {value: 'light_all', text:'light'},
-            {value: 'dark_all', text: 'dark'}
-            ],
         features:
         [
             {id: 0, title: 'Sun Path', isOn: true},
@@ -73,8 +72,12 @@ export default {
          };
         },
     methods: {
-        // reInitMap: this.$root.$on('mountTitleLayer')
-        }
+        reInitMap: function(){
+            //TODO: reinitialize map upon changing style
+            this.$parent.mountTitleLayer()
+            // alert("reInitMap")
+            },
+    }
 };
 
 </script>

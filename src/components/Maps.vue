@@ -8,7 +8,7 @@
 
 <script>
 // import Vue2Leaflet from 'vue2-leaflet';
-import L from 'leaflet';
+// import L from 'leaflet';
 
 export default {
   name: 'Maps',
@@ -24,30 +24,7 @@ export default {
         }
   },
   mounted(){
-    this.mountTileLayer();
-    this.initLayers();
-    },
-  methods: {
-    mountTileLayer: function(){
-      this.$parent.mapStyle = this.$parent.mapStyles[0].value;
-      this.tileLayer = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/'+ this.$parent.mapStyle + '/{z}/{x}/{y}.png';
-      this.initMap()
-    },
-    initMap() {
-      this.map = L.map('mapid', {
-        center: [51.505, -0.09],
-        zoom: 13,
-        zoomControl: true,
-        preferCanvas: false
-         }
-        );
-      },
-    initLayers() {
-      L.tileLayer(this.tileLayer, {
-      attribution: this.attribution,
-      maxZoom: 18,
-         }).addTo(this.map);
-     },
+    this.$parent.mountMap();
     },
   components: {
   }
