@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <OptionsMenu  @change-style="updateStyle"/>
-    <Maps/>
+    <Maps @search-query="searchMap"/>
   </div>
 </template>
 
@@ -28,9 +28,8 @@ export default {
       ],
       mapStyle: '', 
       tileLayer: '',
-      mapCenter: [51.505, -0.09], // current center is London
+      mapCenter: [51.505, -0.09], // default center is London
       currentZoom: 13,
-      searchProvier: new OpenStreetMapProvider(),
       searchResults: null,
     }
   },
@@ -62,15 +61,9 @@ export default {
       this.initLayers();
      },
      searchMap: async function(search){
-      this.searchResults = await this.searchProvier.search({ query: search });
-      // var searchControl = new GeoSearchControl({
-      //   provider: this.searchProvier,
-      //   style: 'bar',
-      //   autoCompleteDelay: 250,  
-      //   }).addTo(this.map);
-
-      // this.map.addControl(searchControl);
-      // // var results = new L.LayerGroup().addTo(this.map);
+      const searchProvier = new OpenStreetMapProvider();
+      this.searchResults = await searchProvier.search({ query: search });
+      
      },
      updateStyle: function(style){
       this.mapStyle = style;

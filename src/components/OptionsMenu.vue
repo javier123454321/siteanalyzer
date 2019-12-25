@@ -17,7 +17,8 @@
             </div>
         </div>
         <div>
-        <b-dropdown id="choose style" text="Select Map Style" 
+        <b-dropdown 
+        id="choose style" text="Select Map Style" 
         ref="dropdown" class="m-2"
         block variant="light">
             <b-dropdown-item :styles='$parent.mapStyles' 

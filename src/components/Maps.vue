@@ -2,10 +2,19 @@
     <div class="mapArea" id="map">
       <div id="mapid"></div>
     <div class='pointer'>
-        <form id="searchForm" placeholder="Search Map" @submit="$emit('search-query', this.searchQuery())">
+        <form id="searchForm" placeholder="Search Map" method="post" @submit.prevent>
           <input type="text" name="searchQuery" id="searchMap" placeholder="Search Map">
-          <button type="submit"><img src="//src/assets/magnifying-glass.png"></button>
+          <button id="magGlass" type="submit" @click="searchQuery"><img src="@/assets/magnifying-glass.png"></button>
         </form>
+    </div>
+    <div class="searchResults">
+      <b-list-group>
+        <b-list-group-item button 
+        v-for='searchResult in $parent.searchResult'
+        v-bind:key='searchResult'>
+          {{ searchResult.label }}
+        </b-list-group-item>
+      </b-list-group>
     </div>
     </div>
 
@@ -23,7 +32,6 @@ export default {
   } ,
   data(){
     return {
-      searchResults: null
         }
   },
   mounted(){
@@ -33,11 +41,16 @@ export default {
   },
   methods: {
     searchQuery: function(){
-      let searchValue = document.getElementById("searchForm").value;
-      // alert(document.getElementById("searchMap").value);
+      const searchValue = document.getElementById("searchMap").value;
       document.getElementById("searchMap").value = '';
-      return searchValue;
-      
+      this.sendQueryToParent(searchValue);
+      this.showSearchResults();
+    },
+    sendQueryToParent: function(query){ 
+      this.$emit('search-query', query);
+      },
+    showSearchResults: function(){
+      document.getElementsByClassName("searchResults")[0].style.display = 'block';
     }
     },
 }
@@ -70,5 +83,14 @@ export default {
     }
     .pointer:hover{
       cursor: pointer;
+    }
+    .searchResults{
+      z-index: 9999;
+      display: none;
+    }
+    #magGlass{
+      height: 30px;
+      width: 30px;
+      overflow: hidden;
     }
 </style>
