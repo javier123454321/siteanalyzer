@@ -16,6 +16,15 @@
                 v-model='date'/>
             </div>
         </div>
+        <div>
+        <b-dropdown id="choose style" text="Select Map Style" 
+        ref="dropdown" class="m-2"
+        block variant="light">
+            <b-dropdown-item :styles='mapStyles' :key='style' v-for='style in mapStyles'>
+                {{ style.text }}
+            </b-dropdown-item>
+        </b-dropdown>
+        </div>
         <ul>
             <div :features='feature' :key='feature' v-for='feature in features' class="menuItem">
             <li >{{ feature.title }} 
@@ -23,7 +32,7 @@
                 v-model="feature.isOn"
                 class="toggleButton"
                 :sync="true"
-                :labels="true"/>
+                :labels="true"/>    
             </li>
             </div>
         </ul>
@@ -36,10 +45,14 @@ export default {
   name: 'OptionsMenu',
   data(){
       return {
+        mapStyles: [
+            {value: 'light_all', text:'light'},
+            {value: 'dark_all', text: 'dark'}
+            ],
         features:
         [
-        {id: 0, title: 'Sun Path', isOn: true},
-        {id: 1, title: 'Area', isOn: true}
+            {id: 0, title: 'Sun Path', isOn: true},
+            {id: 1, title: 'Area', isOn: true}
         ],
         picker: [
             {modes: ['single', 'range']},
@@ -54,12 +67,16 @@ export default {
             },
             contentStyle: {
                color: '#fafafa',
-            },
+                },
             }
-        ],
-        };
-    },
-    };
+            ],
+         };
+        },
+    methods: {
+        // reInitMap: this.$root.$on('mountTitleLayer')
+        }
+};
+
 </script>
 
 <style>
@@ -90,5 +107,8 @@ export default {
     }
     .toggleButton{
         float: right;
+    }
+    .selectStyle{
+        margin: 10px, 10px;
     }
 </style>

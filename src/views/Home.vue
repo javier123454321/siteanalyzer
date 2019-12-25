@@ -18,7 +18,13 @@ export default {
   },
   data(){
     return {
-      options: []
+      options: [],
+      mapStyles: [
+        {value: 'light_all', text:'light'},
+        {value: 'dark_all', text: 'dark'}
+      ],
+      mapStyle: '',
+      
     }
   }
 }
