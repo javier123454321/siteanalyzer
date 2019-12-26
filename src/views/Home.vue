@@ -10,7 +10,7 @@
 import Maps from '@/components/Maps.vue';
 import OptionsMenu from '@/components/OptionsMenu.vue'
 import L from 'leaflet';
-import { /*GeoSearchControl,*/ OpenStreetMapProvider } from 'leaflet-geosearch';
+import { OpenStreetMapProvider } from 'leaflet-geosearch';
 
 
 export default {
