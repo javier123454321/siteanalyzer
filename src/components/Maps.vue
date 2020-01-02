@@ -1,12 +1,12 @@
 <template>
-    <div class="mapArea" id="map">
+    <div class="mapArea" id="map" @click="hideSearchResults">
       <div id="mapid"></div>
 
     <div class='pointer'>
       <form id="searchForm" placeholder="Search Map" method="post" @submit.prevent>
-        <input type="text" name="searchQuery" id="searchMap" placeholder="Search Map" @keyup="searchQuery" @click="showSearchResults" autocomplete="off">
-        <button id="magGlass" type="submit" @click="searchQuery">
-          <img src="@/assets/magnifying-glass-icon-transparent-11.png">
+        <input type="search" name="searchQuery" id="searchMap" placeholder="Search Map" @keyup="searchQuery" @click="showSearchResults" autocomplete="off">
+        <button class="magLogo" id="magGlass" type="submit" @click="searchQuery">
+          <img class="magLogo" src="@/assets/magnifying-glass-icon-transparent-11.png">
         </button>
       </form>
 
@@ -114,9 +114,15 @@ export default {
       max-height: 60px;
       overflow: hidden;
     }
-    #magGlass{
+    .magLogo{
+      padding: 2px;
       height: 30px;
       width: 30px;
       overflow: hidden;
     }
+    .magLogo > img{
+      height: 25px;
+      width: 25px;
+    }
+
 </style>
