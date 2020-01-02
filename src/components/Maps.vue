@@ -4,7 +4,7 @@
 
     <div class='pointer'>
       <form id="searchForm" placeholder="Search Map" method="post" @submit.prevent>
-        <input type="text" name="searchQuery" id="searchMap" placeholder="Search Map" @click="showSearchResults" autocomplete="false">
+        <input type="text" name="searchQuery" id="searchMap" placeholder="Search Map" @keyup="searchQuery" @click="showSearchResults" autocomplete="off">
         <button id="magGlass" type="submit" @click="searchQuery">
           <img src="@/assets/magnifying-glass-icon-transparent-11.png">
         </button>
@@ -98,6 +98,7 @@ export default {
       z-index:9995;
       max-width: 210px;
       overflow: hidden;
+      box-shadow: -1px 1px 3px;
     }
     .pointer:hover{
       cursor: pointer;
