@@ -1,6 +1,6 @@
 <template>
-    <div class="mapArea" id="map" @click="hideSearchResults">
-      <div id="mapid"></div>
+    <div class="mapArea" id="map">
+      <div id="mapid" @click="hideSearchResults"></div>
 
     <div class='pointer'>
       <form id="searchForm" placeholder="Search Map" method="post" @submit.prevent>
@@ -62,9 +62,9 @@ export default {
       document.getElementsByClassName("searchResults")[0].style.display = 'none';
     },
     searchCoordinates: function(searchResult){
-      //TODO find Zoom Level based on bounds
       this.$parent.mapCenter = [parseFloat(searchResult.y), parseFloat(searchResult.x)];
       this.$parent.resetMap();
+      this.$parent.map.fitBounds(searchResult.bounds, true);
       document.getElementById("searchMap").value = '';
       this.hideSearchResults();
     },
@@ -98,7 +98,7 @@ export default {
       z-index:9995;
       max-width: 210px;
       overflow: hidden;
-      box-shadow: -1px 1px 3px;
+      box-shadow: -2px 2px 6px rgb(177, 177, 177);
     }
     .pointer:hover{
       cursor: pointer;

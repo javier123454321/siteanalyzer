@@ -63,7 +63,6 @@ export default {
      searchMap: async function(search){
       const searchProvier = new OpenStreetMapProvider();
       this.searchResults = await searchProvier.search({ query: search });
-      
      },
      updateStyle: function(style){
       this.mapStyle = style;
