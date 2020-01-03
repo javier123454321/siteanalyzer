@@ -65,7 +65,6 @@ export default {
       this.$parent.mapCenter = [parseFloat(searchResult.y), parseFloat(searchResult.x)];
       this.$parent.resetMap();
       this.$parent.map.fitBounds(searchResult.bounds, true);
-      document.getElementById("searchMap").value = '';
       this.hideSearchResults();
     },
     },
