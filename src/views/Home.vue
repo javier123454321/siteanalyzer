@@ -56,24 +56,31 @@ export default {
       maxZoom: 18,
          }).addTo(this.map);
      },
-     mountMap: function() {
+    mountMap: function() {
       this.mountTileLayer();
       this.initLayers();
      },
-     searchMap: async function(search){
+    searchMap: async function(search){
       const searchProvier = new OpenStreetMapProvider();
       this.searchResults = await searchProvier.search({ query: search });
      },
-     updateStyle: function(style){
+    updateStyle: function(style){
       this.mapStyle = style;
       this.mapCenter = this.map.getCenter();
       this.currentZoom = this.map.getZoom();
       this.resetMap();
      },
-     resetMap: function(){
+    resetMap: function(){
       this.map.remove();
       this.mountMap();
-      }
+      },
+    addMarker: function(coordinates){
+      L.marker(coordinates).addTo(this.map);
+    },
+    addMarkerCenter: function(){
+      L.marker(this.mapCenter = this.map.getCenter()).addTo(this.map)
+      
+    }
   }
 }
 </script>
