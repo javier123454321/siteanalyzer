@@ -29,7 +29,10 @@
             </b-dropdown>
 
             <b-button block variant="light" @click="$parent.addMarkerCenter()">
-                Set Point in Map Center
+                Set Point in Center
+            </b-button>
+            <b-button block variant="light">
+                Set Point in Map
             </b-button>
         </div>
         <ul>
@@ -47,7 +50,6 @@
 </template>
 
 <script>
-// import { log } from 'util';
 
 export default {
   name: 'OptionsMenu',
@@ -81,9 +83,18 @@ export default {
         reInitMap: function(){
             this.$parent.mountTitleLayer()
             },
-            
+        markerOnClick: function(){
+            let active = true;
+            while(active){ 
+                // this.$parent.map.on('click', function(e) {
+                // alert(e.latlng.lat,e.latlng.lng);
+                alert('click');
+                active = false;
+                    // });
+                }
+            },
     }
-};
+}
 
 </script>
 

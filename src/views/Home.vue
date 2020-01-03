@@ -12,7 +12,6 @@ import OptionsMenu from '@/components/OptionsMenu.vue'
 import L from 'leaflet';
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
 
-
 export default {
   name: 'home',
   components: {
@@ -31,6 +30,9 @@ export default {
       mapCenter: [51.505, -0.09], // default center is London
       currentZoom: 13,
       searchResults: null,
+      point: {
+        isOn: false, 
+      }
     }
   },
   methods: {
@@ -75,14 +77,23 @@ export default {
       this.mountMap();
       },
     addMarker: function(coordinates){
+      //TODO: figure out how to make a custom icon
+      // let myIcon = L.icon({
+      //   iconUrl: '@/assets/Marker.png',
+      //   iconRetinaUrl: '@/assets/Marker.png',
+      // iconSize: [56,56],
+      // iconAnchor: [28, 56],
+      // popupAnchor: [-3, -76],
+      // shadowSize: [68, 95],
+      // shadowAnchor: [22, 94]
+      // });
+      // L.marker(coordinates, {icon: myIcon}).addTo(this.map);
       L.marker(coordinates).addTo(this.map);
     },
     addMarkerCenter: function(){
-      L.marker(this.mapCenter = this.map.getCenter()).addTo(this.map)
-      
-    }
+      const center = this.mapCenter = this.map.getCenter();
+      this.addMarker(center);
+    },
   }
 }
 </script>
-
-
