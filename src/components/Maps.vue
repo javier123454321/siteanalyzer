@@ -1,14 +1,36 @@
 <template>
     <div class="mapArea" id="map">
-      <div id="mapid"></div>
+      <div id="mapid" @click="hideSearchResults"></div>
+
+    <div class='pointer'>
+      <form id="searchForm" placeholder="Search Map" method="post" @submit.prevent>
+        <input type="search" name="searchQuery" id="searchMap" placeholder="Search Map" @keyup="searchQuery" @click="showSearchResults" autocomplete="off">
+        <button class="magLogo" id="magGlass" type="submit" @click="searchQuery">
+          <img class="magLogo" src="@/assets/magnifying-glass-icon-transparent-11.png">
+        </button>
+      </form>
+
+      <div>
+        <b-list-group class="searchResults">
+          <b-list-group-item button 
+          class="searchResultList"
+          v-for='searchResult in this.$store.getters.searchResults'
+          v-bind:key='searchResult' @click="searchCoordinates(searchResult)">
+           {{ searchResult.label }} 
+          </b-list-group-item>
+        </b-list-group>
+      </div>
     </div>
+
+    
+  </div>
 
 </template>
 
 
 <script>
 // import Vue2Leaflet from 'vue2-leaflet';
-import L from 'leaflet';
+// import L from 'leaflet';
 
 export default {
   name: 'Maps',
@@ -17,40 +39,35 @@ export default {
   } ,
   data(){
     return {
-        map: null,
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        tileLayer: '',
-        layers: [],
         }
   },
   mounted(){
-    this.mountTileLayer();
-    this.initLayers();
-    },
-  methods: {
-    mountTileLayer: function(){
-      this.$parent.mapStyle = this.$parent.mapStyles[0].value;
-      this.tileLayer = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/'+ this.$parent.mapStyle + '/{z}/{x}/{y}.png';
-      this.initMap()
-    },
-    initMap() {
-      this.map = L.map('mapid', {
-        center: [51.505, -0.09],
-        zoom: 13,
-        zoomControl: true,
-        preferCanvas: false
-         }
-        );
-      },
-    initLayers() {
-      L.tileLayer(this.tileLayer, {
-      attribution: this.attribution,
-      maxZoom: 18,
-         }).addTo(this.map);
-     },
+    this.$parent.mountMap();
     },
   components: {
-  }
+  },
+  methods: {
+    searchQuery: function(){
+      const searchValue = document.getElementById("searchMap").value;
+      this.sendQueryToParent(searchValue);
+      this.showSearchResults();
+    },
+    sendQueryToParent: function(query){ 
+      this.$emit('search-query', query);
+      },
+    showSearchResults: function(){
+      document.getElementsByClassName("searchResults")[0].style.display = 'block';
+    },
+    hideSearchResults: function(){
+      document.getElementsByClassName("searchResults")[0].style.display = 'none';
+    },
+    searchCoordinates: function(searchResult){
+      this.$parent.mapCenter = [parseFloat(searchResult.y), parseFloat(searchResult.x)];
+      this.$parent.resetMap();
+      this.$parent.map.fitBounds(searchResult.bounds, true);
+      this.hideSearchResults();
+    },
+    },
 }
 </script>
 
@@ -64,8 +81,47 @@ export default {
         bottom: 0;
         right: 0;
         overflow: hidden;
+        z-index: 0;
     }
     #mapid { 
       height: 100%; 
       }
+    #searchMap {
+      z-index: 9999;
+    }
+    
+    .pointer{
+      position:absolute;
+      top:86px;
+      left:10px;
+      z-index:9995;
+      max-width: 210px;
+      overflow: hidden;
+      box-shadow: -2px 2px 6px rgb(177, 177, 177);
+    }
+    .pointer:hover{
+      cursor: pointer;
+    }
+    .searchResults{
+      z-index: 9999;
+      display: none;
+      max-height: 50vh;
+      overflow-y: scroll;
+    }
+    .searchResultList{
+      height: 10%;
+      max-height: 60px;
+      overflow: hidden;
+    }
+    .magLogo{
+      padding: 2px;
+      height: 30px;
+      width: 30px;
+      overflow: hidden;
+    }
+    .magLogo > img{
+      height: 25px;
+      width: 25px;
+    }
+
 </style>

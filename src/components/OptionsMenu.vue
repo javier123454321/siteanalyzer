@@ -16,14 +16,24 @@
                 v-model='date'/>
             </div>
         </div>
-        <div>
-        <b-dropdown id="choose style" text="Select Map Style" 
-        ref="dropdown" class="m-2"
-        block variant="light">
-            <b-dropdown-item :styles='mapStyles' :key='style' v-for='style in mapStyles'>
-                {{ style.text }}
-            </b-dropdown-item>
-        </b-dropdown>
+        <div class="mainSettings m-2">
+            <b-dropdown 
+            id="choose style" text="Select Map Style" 
+            ref="dropdown"
+            block variant="light">
+                <b-dropdown-item :styles='$parent.mapStyles' 
+                :key='style' v-for='style in $parent.mapStyles' 
+                @click="$emit('change-style', style.value)">
+                    {{ style.text }}
+                </b-dropdown-item>
+            </b-dropdown>
+
+            <b-button block variant="light" @click="$parent.addMarkerCenter()">
+                Set Point in Center
+            </b-button>
+            <b-button block variant="light">
+                Set Point in Map
+            </b-button>
         </div>
         <ul>
             <div :features='feature' :key='feature' v-for='feature in features' class="menuItem">
@@ -45,14 +55,11 @@ export default {
   name: 'OptionsMenu',
   data(){
       return {
-        mapStyles: [
-            {value: 'light_all', text:'light'},
-            {value: 'dark_all', text: 'dark'}
-            ],
         features:
         [
-            {id: 0, title: 'Sun Path', isOn: true},
-            {id: 1, title: 'Area', isOn: true}
+            {id: 0, title: 'Point', isOn: false, coordinates:[]},
+            {id: 1, title: 'Sun Path', isOn: false},
+            {id: 2, title: 'Area', isOn: false}
         ],
         picker: [
             {modes: ['single', 'range']},
@@ -73,9 +80,21 @@ export default {
          };
         },
     methods: {
-        // reInitMap: this.$root.$on('mountTitleLayer')
-        }
-};
+        reInitMap: function(){
+            this.$parent.mountTitleLayer()
+            },
+        markerOnClick: function(){
+            let active = true;
+            while(active){ 
+                // this.$parent.map.on('click', function(e) {
+                // alert(e.latlng.lat,e.latlng.lng);
+                alert('click');
+                active = false;
+                    // });
+                }
+            },
+    }
+}
 
 </script>
 
@@ -110,5 +129,8 @@ export default {
     }
     .selectStyle{
         margin: 10px, 10px;
+    }
+    .mainSettings > *{
+        margin-top: 5px;
     }
 </style>
