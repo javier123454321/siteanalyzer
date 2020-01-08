@@ -21,8 +21,8 @@
             id="choose style" text="Select Map Style" 
             ref="dropdown"
             block variant="light">
-                <b-dropdown-item :styles='$parent.mapStyles' 
-                :key='style' v-for='style in $parent.mapStyles' 
+                <b-dropdown-item 
+                :key='style' v-for='style in this.$store.getters.get_mapStyles' 
                 @click="$emit('change-style', style.value)">
                     {{ style.text }}
                 </b-dropdown-item>
@@ -33,6 +33,9 @@
             </b-button>
             <b-button block variant="light">
                 Set Point in Map
+            </b-button>
+            <b-button block variant="light" @click="test()">
+                TestFucnt
             </b-button>
         </div>
         <ul>
@@ -93,6 +96,9 @@ export default {
                     // });
                 }
             },
+        test: function(){
+            this.$store.commit('update_currentZoom', 2)
+        }
     }
 }
 

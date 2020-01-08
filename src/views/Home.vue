@@ -23,7 +23,8 @@ export default {
       options: [],
       mapStyles: [
         {value: 'light_all', text:'light'},
-        {value: 'dark_all', text: 'dark'}
+        {value: 'dark_all', text: 'dark'},
+        {value: 'dad_all', text: 'test'}
       ],
       mapStyle: '', 
       tileLayer: '',
@@ -36,23 +37,24 @@ export default {
   },
   methods: {
     mountTileLayer: function(){
-      if (this.mapStyle == ''){
-                this.mapStyle = this.mapStyles[0].value;
+      let styles = this.$store.getters.get_mapStyles
+      if (this.$store.getters.get_mapStyle == ''){
+            this.$store.commit('update_mapStyle', styles[0].value)
       }
-      this.tileLayer = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/'+ this.mapStyle + '/{z}/{x}/{y}.png';
+      this.$store.commit('update_tileLayer', 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/'+ this.$store.getters.get_mapStyle + '/{z}/{x}/{y}.png');
       this.initMap()
     },
     initMap: function() {
       this.map = L.map('mapid', {
-        center: this.mapCenter,
-        zoom: this.currentZoom,
+        center: this.$store.getters.get_mapCenter,
+        zoom: this.$store.getters.get_currentZoom,
         zoomControl: true,
         preferCanvas: false
          }
         );
       },
     initLayers: function() {
-      L.tileLayer(this.tileLayer, {
+      L.tileLayer(this.$store.getters.get_tileLayer, {
       attribution: this.attribution,
       maxZoom: 18,
          }).addTo(this.map);

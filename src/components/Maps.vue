@@ -54,7 +54,7 @@ export default {
     searchMap: async function(search){
       const searchProvier = new OpenStreetMapProvider();
       const results = await searchProvier.search({ query: search });
-      this.$store.commit('update_SearchResults', results)
+      this.$store.commit('update_searchResults', results)
      },
     showSearchResults: function(){
       document.getElementsByClassName("searchResults")[0].style.display = 'block';
