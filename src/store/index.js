@@ -18,5 +18,15 @@ export const store = new Vuex.Store({
     point: {
       isOn: false, 
     }
-  }
+  },
+  mutations: {
+    updateSearchResults: function(state, results) {
+      this.state.searchResults = results
+    }
+  },
+  getters: {
+    searchResults: (state) => { 
+      return state.searchResults
+    }
+    }
 })

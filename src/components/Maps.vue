@@ -14,7 +14,7 @@
         <b-list-group class="searchResults">
           <b-list-group-item button 
           class="searchResultList"
-          v-for='searchResult in this.$parent.searchResults'
+          v-for='searchResult in this.$store.getters.searchResults'
           v-bind:key='searchResult' @click="searchCoordinates(searchResult)">
            {{ searchResult.label }} 
           </b-list-group-item>

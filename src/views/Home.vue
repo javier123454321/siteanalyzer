@@ -7,6 +7,7 @@
 
 <script>
 // @ is an alias to /src
+// import { mapState } from 'vuex'
 import Maps from '@/components/Maps.vue';
 import OptionsMenu from '@/components/OptionsMenu.vue'
 import L from 'leaflet';
@@ -64,7 +65,8 @@ export default {
      },
     searchMap: async function(search){
       const searchProvier = new OpenStreetMapProvider();
-      this.searchResults = await searchProvier.search({ query: search });
+      const results = await searchProvier.search({ query: search });
+      this.$store.commit('updateSearchResults', results)
      },
     updateStyle: function(style){
       this.mapStyle = style;
@@ -79,8 +81,8 @@ export default {
     addMarker: function(coordinates){
       //TODO: figure out how to make a custom icon
       // let myIcon = L.icon({
-      //   iconUrl: '@/assets/Marker.png',
-      //   iconRetinaUrl: '@/assets/Marker.png',
+      // iconUrl: '@/assets/Marker.png',
+      // iconRetinaUrl: '@/assets/Marker.png',
       // iconSize: [56,56],
       // iconAnchor: [28, 56],
       // popupAnchor: [-3, -76],
