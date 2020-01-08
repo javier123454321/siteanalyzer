@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <OptionsMenu  @change-style="updateStyle"/>
-    <Maps @search-query="searchMap"/>
+    <Maps/>
   </div>
 </template>
 
@@ -11,7 +11,6 @@
 import Maps from '@/components/Maps.vue';
 import OptionsMenu from '@/components/OptionsMenu.vue'
 import L from 'leaflet';
-import { OpenStreetMapProvider } from 'leaflet-geosearch';
 
 export default {
   name: 'home',
@@ -38,7 +37,7 @@ export default {
   methods: {
     mountTileLayer: function(){
       if (this.mapStyle == ''){
-        this.mapStyle = this.mapStyles[0].value;
+                this.mapStyle = this.mapStyles[0].value;
       }
       this.tileLayer = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/'+ this.mapStyle + '/{z}/{x}/{y}.png';
       this.initMap()
@@ -61,11 +60,6 @@ export default {
     mountMap: function() {
       this.mountTileLayer();
       this.initLayers();
-     },
-    searchMap: async function(search){
-      const searchProvier = new OpenStreetMapProvider();
-      const results = await searchProvier.search({ query: search });
-      this.$store.commit('updateSearchResults', results)
      },
     updateStyle: function(style){
       this.mapStyle = style;
