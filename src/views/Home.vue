@@ -30,7 +30,6 @@ export default {
       tileLayer: '',
       mapCenter: [51.505, -0.09], // default center is London
       currentZoom: 13,
-      searchResults: null,
       point: {
         isOn: false, 
       }
