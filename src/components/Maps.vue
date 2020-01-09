@@ -108,17 +108,22 @@ export default {
       display: none;
       max-height: 50vh;
       overflow-y: scroll;
+      max-width: 205px;
     }
     .searchResultList{
       height: 10%;
       max-height: 60px;
       overflow: hidden;
     }
+    .searchForm{
+      max-width: 170px;
+    }
     .magLogo{
       padding: 2px;
       height: 30px;
       width: 30px;
       overflow: hidden;
+      float: right;
     }
     .magLogo > img{
       height: 25px;
