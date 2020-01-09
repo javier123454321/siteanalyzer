@@ -14,7 +14,7 @@
         <b-list-group class="searchResults">
           <b-list-group-item button 
           class="searchResultList"
-          v-for='searchResult in this.$store.getters.searchResults'
+          v-for='searchResult in this.$store.getters.get_searchResults'
           v-bind:key='searchResult' @click="searchCoordinates(searchResult)">
            {{ searchResult.label }} 
           </b-list-group-item>
@@ -29,8 +29,7 @@
 
 
 <script>
-// import Vue2Leaflet from 'vue2-leaflet';
-// import L from 'leaflet';
+import { OpenStreetMapProvider } from 'leaflet-geosearch';
 
 export default {
   name: 'Maps',
@@ -49,12 +48,14 @@ export default {
   methods: {
     searchQuery: function(){
       const searchValue = document.getElementById("searchMap").value;
-      this.sendQueryToParent(searchValue);
+      this.searchMap(searchValue);
       this.showSearchResults();
     },
-    sendQueryToParent: function(query){ 
-      this.$emit('search-query', query);
-      },
+    searchMap: async function(search){
+      const searchProvier = new OpenStreetMapProvider();
+      const results = await searchProvier.search({ query: search });
+      this.$store.commit('update_searchResults', results)
+     },
     showSearchResults: function(){
       document.getElementsByClassName("searchResults")[0].style.display = 'block';
     },
@@ -107,17 +108,22 @@ export default {
       display: none;
       max-height: 50vh;
       overflow-y: scroll;
+      max-width: 205px;
     }
     .searchResultList{
       height: 10%;
       max-height: 60px;
       overflow: hidden;
     }
+    .searchForm{
+      max-width: 170px;
+    }
     .magLogo{
       padding: 2px;
       height: 30px;
       width: 30px;
       overflow: hidden;
+      float: right;
     }
     .magLogo > img{
       height: 25px;
