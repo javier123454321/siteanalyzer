@@ -8,8 +8,7 @@ export const store = new Vuex.Store({
     options: [],
     mapStyles: [
       {value: 'light_all', text:'light'},
-      {value: 'dark_all', text: 'dark'},
-      {value: 'dark_all', text: 'teststate'}
+      {value: 'dark_all', text: 'dark'}
     ],
     mapStyle: '', 
     tileLayer: '',

@@ -34,9 +34,6 @@
             <b-button block variant="light">
                 Set Point in Map
             </b-button>
-            <b-button block variant="light" @click="test()">
-                TestFucnt
-            </b-button>
         </div>
         <ul>
             <div :features='feature' :key='feature' v-for='feature in features' class="menuItem">
