@@ -28,8 +28,8 @@ export const store = new Vuex.Store({
     update_mapStyle: function(state, style){
       state.mapStyle = style
     },
-    update_titleLayer: function(state, titleLayer){
-      state.titleLayer = titleLayer
+    update_tileLayer: function(state, tileLayer){
+      state.tileLayer = tileLayer
     },
     update_mapCenter: function(state, coord){
       state.mapCenter = coord
@@ -63,8 +63,8 @@ export const store = new Vuex.Store({
     get_mapStyle: (state) => { 
       return state.mapStyle
     },
-    get_titleLayer: (state) => { 
-      return state.itleLayer
+    get_tileLayer: (state) => { 
+      return state.tileLayer
     },
     get_mapCenter: (state) => { 
       return state.mapCenter

@@ -21,18 +21,6 @@ export default {
   data(){
     return {
       options: [],
-      mapStyles: [
-        {value: 'light_all', text:'light'},
-        {value: 'dark_all', text: 'dark'},
-        {value: 'dad_all', text: 'test'}
-      ],
-      mapStyle: '', 
-      tileLayer: '',
-      mapCenter: [51.505, -0.09], // default center is London
-      currentZoom: 13,
-      point: {
-        isOn: false, 
-      }
     }
   },
   methods: {
@@ -41,7 +29,8 @@ export default {
       if (this.$store.getters.get_mapStyle == ''){
             this.$store.commit('update_mapStyle', styles[0].value)
       }
-      this.$store.commit('update_tileLayer', 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/'+ this.$store.getters.get_mapStyle + '/{z}/{x}/{y}.png');
+      let newTileLayer = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/'+ this.$store.getters.get_mapStyle + '/{z}/{x}/{y}.png'
+      this.$store.commit('update_tileLayer', newTileLayer);
       this.initMap()
     },
     initMap: function() {
@@ -64,9 +53,9 @@ export default {
       this.initLayers();
      },
     updateStyle: function(style){
-      this.mapStyle = style;
-      this.mapCenter = this.map.getCenter();
-      this.currentZoom = this.map.getZoom();
+      this.$store.commit('update_mapStyle', style);
+      this.$store.commit('update_mapCenter', this.map.getCenter());
+      this.$store.commit('update_currentZoom', this.map.getZoom());
       this.resetMap();
      },
     resetMap: function(){
