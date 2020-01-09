@@ -96,7 +96,6 @@ export default {
       top:86px;
       left:10px;
       z-index:9995;
-      max-width: 210px;
       overflow: hidden;
       box-shadow: -2px 2px 6px rgb(177, 177, 177);
     }
