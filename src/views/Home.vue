@@ -74,7 +74,11 @@ export default {
       // shadowAnchor: [22, 94]
       // });
       // L.marker(coordinates, {icon: myIcon}).addTo(this.map);
-      L.marker(coordinates).addTo(this.map);
+      if(! this.$store.state.pointInfo.isOn){
+        L.marker(coordinates).addTo(this.map);
+        this.$store.commit('update_pointInfoIsOnTrue');
+        this.$store.commit('update_pointInfoCoordinates', coordinates);
+      }
     },
     addMarkerCenter: function(){
       const center = this.mapCenter = this.map.getCenter();
