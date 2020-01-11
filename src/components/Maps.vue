@@ -2,24 +2,24 @@
     <div class="mapArea" id="map">
       <div id="mapid" @click="hideSearchResults"></div>
 
-    <div class='pointer'>
-      <form id="searchForm" placeholder="Search Map" method="post" @submit.prevent>
-        <input type="search" name="searchQuery" id="searchMap" placeholder="Search Map" @keyup="searchQuery" @click="showSearchResults" autocomplete="off">
-        <button class="magLogo" id="magGlass" type="submit" @click="searchQuery">
-          <img class="magLogo" src="@/assets/magnifying-glass-icon-transparent-11.png">
-        </button>
-      </form>
+      <div class='pointer'>
+        <form id="searchForm" placeholder="Search Map" method="post" @submit.prevent>
+          <input type="search" name="searchQuery" id="searchMap" placeholder="Search Map" @keyup="searchQuery" @click="showSearchResults" autocomplete="off">
+          <button class="magLogo" id="magGlass" type="submit" @click="searchQuery">
+            <img class="magLogo" src="@/assets/magnifying-glass-icon-transparent-11.png">
+          </button>
+        </form>
 
-      <div>
-        <b-list-group class="searchResults">
-          <b-list-group-item button 
-          class="searchResultList"
-          v-for='searchResult in this.$store.getters.get_searchResults'
-          v-bind:key='searchResult' @click="searchCoordinates(searchResult)">
-           {{ searchResult.label }} 
-          </b-list-group-item>
-        </b-list-group>
-      </div>
+        <div>
+          <b-list-group class="searchResults">
+            <b-list-group-item button 
+            class="searchResultList"
+            v-for='searchResult in this.$store.getters.get_searchResults'
+            v-bind:key='searchResult' @click="searchCoordinates(searchResult)">
+            {{ searchResult.label }} 
+            </b-list-group-item>
+          </b-list-group>
+        </div>
     </div>
 
     
@@ -96,7 +96,6 @@ export default {
       top:86px;
       left:10px;
       z-index:9995;
-      max-width: 210px;
       overflow: hidden;
       box-shadow: -2px 2px 6px rgb(177, 177, 177);
     }

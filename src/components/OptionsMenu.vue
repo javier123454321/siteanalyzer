@@ -93,9 +93,6 @@ export default {
                     // });
                 }
             },
-        test: function(){
-            this.$store.commit('update_currentZoom', 2)
-        }
     }
 }
 
