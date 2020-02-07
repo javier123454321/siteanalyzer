@@ -75,7 +75,7 @@ export default {
       // });
       // L.marker(coordinates, {icon: myIcon}).addTo(this.map);
       if(! this.$store.state.pointInfo.isOn){
-        L.marker(coordinates).addTo(this.map);
+        this.$store.commit('update_pointInfoMarker', L.marker(coordinates, {draggable:true}).addTo(this.map));
         this.$store.commit('update_pointInfoIsOnTrue');
         this.$store.commit('update_pointInfoCoordinates', coordinates);
       }
@@ -84,6 +84,16 @@ export default {
       const center = this.mapCenter = this.map.getCenter();
       this.addMarker(center);
     },
+    addMarkerThroughClick: function(){
+      this.map.on('click', function(event){
+        this.addMarker(event.latlng)
+      });
+    },
+    removeMarker: function(){
+      this.map.removeLayer(this.$store.getters.get_pointInfo.marker);
+        this.$store.commit('update_pointInfoIsOnFalse');
+        this.$store.commit('update_pointInfoCoordinates', []);
+      }
   }
 }
 </script>

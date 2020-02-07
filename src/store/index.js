@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import OptionsMenu from '@/components/OptionsMenu.vue'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
+  modules:{
+     OptionsMenu},
   state: {
     options: [],
     mapStyles: [
@@ -16,6 +19,7 @@ export const store = new Vuex.Store({
     currentZoom: 13,
     searchResults: null,
     pointInfo: {
+      marker: null,
       isOn: false, 
       coordinates: []
     }
@@ -51,6 +55,9 @@ export const store = new Vuex.Store({
     update_pointInfoCoordinates: function(state, coordinates) {
       state.pointInfo.coordinates = coordinates
     },
+    update_pointInfoMarker: function(state, marker) {
+      state.pointInfo.marker = marker
+    },
   },
   getters: {
     get_options: (state) => {
@@ -76,6 +83,12 @@ export const store = new Vuex.Store({
     },
     get_pointInfo: (state) => { 
       return state.pointInfo
+    },
+    get_pointInfoLat: (state) => { 
+      return state.pointInfo.coordinates[0]
+    },
+    get_pointInfoLong: (state) => { 
+      return state.pointInfo.coordinates[1]
     },
   }
 })
