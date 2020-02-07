@@ -84,6 +84,11 @@ export const store = new Vuex.Store({
     get_pointInfo: (state) => { 
       return state.pointInfo
     },
-    
+    get_pointInfoLat: (state) => { 
+      return state.pointInfo.coordinates[0]
+    },
+    get_pointInfoLong: (state) => { 
+      return state.pointInfo.coordinates[1]
+    },
   }
 })

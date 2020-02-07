@@ -38,18 +38,16 @@
                 :disabled.sync="this.$store.state.pointInfo.isOn">
                 Set Point in Center
             </b-button>
-
-            <b-button block 
-                variant="light"
-                :disabled.sync="this.$store.state.pointInfo.isOn">
-                Set Point in Map
-            </b-button>
-            <b-button block pill
-                variant="danger"
-                @click="$parent.removeMarker()"
-                v-show="this.$store.state.pointInfo.isOn">
-                Remove Point
-            </b-button>
+            
+            <div v-if="this.$store.state.pointInfo.isOn">
+                <b-button block pill
+                    variant="danger"
+                    @click="$parent.removeMarker()"
+                    >
+                    Remove Point
+                </b-button>
+                <PointInfo/> 
+            </div>
         </div>
         <ul>
             <div :features='feature' 
@@ -70,11 +68,13 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import PointInfo from '@/components/PointInfo'
 
 export default {
     name: 'OptionsMenu',
-    computed: mapState(['pointInfo.isOn']),
+    components: {
+        PointInfo
+        },
     watch: {
         pointInfo() {
             alert('this.features[0]');
@@ -82,12 +82,6 @@ export default {
     },
     data(){
         return {
-            features:
-            [
-                {id: 0, title: 'Point', isOn: false},
-                {id: 1, title: 'Sun Path', isOn: false},
-                {id: 2, title: 'Area', isOn: false}
-            ],
             picker: [
                 {modes: ['single', 'range']},
                 {mode: 'single'}
