@@ -34,9 +34,6 @@ import L from 'leaflet';
 
 export default {
   name: 'Maps',
-  props: {
-    msg: String
-  } ,
   data(){
     return {
         }
@@ -46,6 +43,16 @@ export default {
     },
   components: {
   },
+  created() {
+    this.$store.watch(
+      (state, getters) => getters.get_mapStyle,
+      () => {
+        this.$store.commit('update_mapCenter', this.map.getCenter());
+        this.$store.commit('update_currentZoom', this.map.getZoom());
+        this.resetMap()
+      })
+    },
+
   methods: {
     mountMap: function() {
       this.mountTileLayer();
@@ -99,9 +106,9 @@ export default {
       document.getElementsByClassName("searchResults")[0].style.display = 'none';
     },
     searchCoordinates: function(searchResult){
-      this.$parent.mapCenter = [parseFloat(searchResult.y), parseFloat(searchResult.x)];
+      this.mapCenter = [parseFloat(searchResult.y), parseFloat(searchResult.x)];
       this.resetMap();
-      this.$parent.map.fitBounds(searchResult.bounds, true);
+      this.map.fitBounds(searchResult.bounds, true);
       this.hideSearchResults();
       },
     },
