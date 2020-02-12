@@ -6,9 +6,14 @@
         <b-collapse id="my-collapse">
             <b-card> 
                 <b-card-text>
-                    <strong>Sunrise:</strong> {{this.sunrise}} <br>
-                    <strong>Sunset:</strong> {{this.sunset}}<br>
-                    <strong>Solar Noon:</strong> {{this.solarNoon}}<br>
+                    <div v-if="this.isLoadingData">
+                        Fetching Weather Data...
+                    </div>
+                    <div v-else>
+                        <strong>Sunrise:</strong> {{this.coordInfo.sunrise}} <br>
+                        <strong>Sunset:</strong> {{this.coordInfo.sunset}}<br>
+                        <strong>Solar Noon:</strong> {{this.coordInfo.solarNoon}}<br>
+                    </div>
                 </b-card-text>
             </b-card>
         </b-collapse>
@@ -23,19 +28,26 @@ export default {
     name: 'PointInfo',
     data(){
         return {
-            sunrise: '',
-            sunset: '',
-            solarNoon: ''
+            isLoadingData: false,
+            coordInfo:{
+                sunrise: '',
+                sunset: '',
+                solarNoon: ''
+                }
             }
         },
     methods:{
         getCoordinateData: function(){
+            this.isLoadingData = true;
             let lat = this.$store.state.pointInfo.coordinates.lat;
             let long = this.$store.state.pointInfo.coordinates.lng;
+
             axios.get(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${long}`).then(Response=>(
-                this.sunrise = Response.data.results.sunrise,
-                this.sunset = Response.data.results.sunset,
-                this.solarNoon = Response.data.results.solar_noon))
+                this.isLoadingData = false,
+                
+                this.coordInfo.sunrise = Response.data.results.sunrise,
+                this.coordInfo.sunset = Response.data.results.sunset,
+                this.coordInfo.solarNoon = Response.data.results.solar_noon))
         }
     },
     mounted:{
