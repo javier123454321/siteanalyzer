@@ -51,6 +51,11 @@ export default {
         this.$store.commit('update_currentZoom', this.map.getZoom());
         this.resetMap()
       })
+      this.$store.watch(
+        (state, getters) => getters.get_pointInfoCoordinates,
+        (pointInfoCoordinates) => {
+          L.marker(pointInfoCoordinates).addTo(this.map);
+        })
     },
 
   methods: {
@@ -81,6 +86,9 @@ export default {
         preferCanvas: false
          }
         );
+        this.map.on('moveend', () => {
+          this.$store.commit('update_mapCenter', this.map.getCenter())
+        })
       },
     resetMap: function(){
       this.map.remove();
@@ -112,7 +120,7 @@ export default {
       this.hideSearchResults();
       },
     },
-        addMarker: function(coordinates){
+    addMarker: function(coordinates){
       //TODO: figure out how to make a custom icon
       // let myIcon = L.icon({
       // iconUrl: '@/assets/Marker.png',

@@ -34,7 +34,7 @@
 
             <b-button 
                 block variant="light" 
-                @click="$parent.addMarkerCenter()"
+                @click="addPointCenter()"
                 :disabled.sync="this.$store.state.pointInfo.isOn">
                 Set Point in Center
             </b-button>
@@ -101,6 +101,9 @@ export default {
             };
             },
     methods:{
+        addPointCenter: function(){
+            this.$store.commit('update_pointInfoCoordinates', this.$store.getters.get_mapCenter)
+        }
     }
 }
 
